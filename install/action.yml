@@ -3,7 +3,7 @@ inputs:
     description: "Name of the RAPyDo Project to be configured"
   codecov_token:
     description: "Codecov Token
-    default: ""
+    required: false
 runs:
   using: "composite"
   steps:
