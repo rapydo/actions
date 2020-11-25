@@ -1,6 +1,3 @@
-inputs:
-  project:
-    description: "Setup Cypress environment for RAPyDo integration tests"
 runs:
   using: "composite"
   steps:
