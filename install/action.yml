@@ -4,7 +4,14 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: echo Hello ${{ inputs.project}}
+    - run: |
+          python -m pip install --upgrade pip
+          export RAPYDO_VERSION=$(grep "  rapydo:" projects/${{ inputs.project}}/project_configuration.yaml | sed 's/  rapydo: //' | tr -d '"')
+          # Make the environment variable available to next steps
+          echo "RAPYDO_VERSION=${RAPYDO_VERSION}" >> $GITHUB_ENV
+          pip install --upgrade --no-cache-dir git+https://github.com/rapydo/do.git@${RAPYDO_VERSION}
+          rapydo version
+          rapydo --testing init
       shell: bash
-    - run: echo "Nice to meet you!"
-      shell: pwsh
+    # - run: echo "Nice to meet you!"
+    #   shell: pwsh
