@@ -1,9 +1,14 @@
+inputs:
+  id:
+    description: "Cypress Project ID"
+  key:
+    description: "Cypress Project Key"
 runs:
   using: "composite"
   steps:
     - run: |
-          export CYPRESS_PROJECT_ID=${{ secrets.CYPRESS_PROJECT_ID }}
-          export CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }}
+          export CYPRESS_PROJECT_ID=${{ inpus.id }}
+          export CYPRESS_RECORD_KEY=${{ inpus.key }}
 
           # Extra variables needed by Cypress
           export COMMIT_INFO_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
