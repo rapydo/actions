@@ -1,8 +1,10 @@
 inputs:
   id:
     description: "Cypress Project ID"
+    required: true
   key:
     description: "Cypress Project Key"
+    required: true
 runs:
   using: "composite"
   steps:
