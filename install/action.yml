@@ -14,7 +14,7 @@ runs:
           echo "RAPYDO_VERSION=${RAPYDO_VERSION}" >> $GITHUB_ENV
           echo "CODECOV_TOKEN=${{ inputs.codecov_token }}" >> $GITHUB_ENV
           pip install --upgrade --no-cache-dir git+https://github.com/rapydo/do.git@${RAPYDO_VERSION}
-          rapydo --testing init
+          rapydo --testing --project ${{ inputs.project}} init
           rapydo version
       shell: bash
     # - run: echo "Nice to meet you!"
