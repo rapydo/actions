@@ -2,7 +2,7 @@ inputs:
   project:
     description: "Name of the RAPyDo Project to be configured"
   codecov_token:
-    description: "Codecov Token
+    description: "Codecov Token"
     required: false
 runs:
   using: "composite"
