@@ -1,6 +1,9 @@
 inputs:
   project:
     description: "Name of the RAPyDo Project to be configured"
+  codecov_token:
+    description: "Codecov Token
+    default: ""
 runs:
   using: "composite"
   steps:
@@ -9,7 +12,7 @@ runs:
           export RAPYDO_VERSION=$(grep "  rapydo:" projects/${{ inputs.project}}/project_configuration.yaml | sed 's/  rapydo: //' | tr -d '"')
           # Make the environment variable available to next steps
           echo "RAPYDO_VERSION=${RAPYDO_VERSION}" >> $GITHUB_ENV
-          echo "CODECOV_TOKEN=${{ secrets.CODECOV_TOKEN }}" >> $GITHUB_ENV
+          echo "CODECOV_TOKEN=${{ inputs.codecov_token }}" >> $GITHUB_ENV
           pip install --upgrade --no-cache-dir git+https://github.com/rapydo/do.git@${RAPYDO_VERSION}
           rapydo --testing init
           rapydo version
