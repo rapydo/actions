@@ -5,12 +5,19 @@ inputs:
   key:
     description: "Cypress Project Key"
     required: true
+  folder:
+    description: "Optional folder from where extract COMMIT info"
+    required: false
 runs:
   using: "composite"
   steps:
     - run: |
           export CYPRESS_PROJECT_ID=${{ inputs.id }}
           export CYPRESS_RECORD_KEY=${{ inputs.key }}
+
+          if [[ ! -z "${{ inputs.folder }}" ]]; then
+            cd ${{ inputs.folder }};
+          fi
 
           # Extra variables needed by Cypress
           export COMMIT_INFO_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
@@ -41,5 +48,9 @@ runs:
           echo "COMMIT_INFO_REMOTE=${COMMIT_INFO_REMOTE}" >> $GITHUB_ENV
           echo "CYPRESS_GROUP=${CYPRESS_GROUP}" >> $GITHUB_ENV
           echo "Cypress environment is ready"
+
+          if [[ ! -z "${{ inputs.folder }}" ]]; then
+            cd -;
+          fi
 
       shell: bash
