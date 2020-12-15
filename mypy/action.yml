@@ -1,0 +1,33 @@
+inputs:
+  project:
+    description: "Name of project to be tested"
+    required: true
+  install:
+    description: "List of extra libraries or stubs to be installed
+    required: false
+    default: ""
+  ignore:
+    description: "List of libraries to be ignored"
+    required: false
+    default: ""
+
+runs:
+  using: "composite"
+  steps:
+    - run: |
+          pip install mypy lxml html5lib ${{ inputs.install }}
+          echo "[mypy]" > mypy.ini
+          if [[ ! -z ${{ inputs.ignore }} ]]; then
+            for lib in ${{ inputs.ignore }}; do
+              echo "[mypy-${lib}.*]" >> mypy.ini
+              echo "ignore_missing_imports = True" >> mypy.ini
+            done
+          fi
+          # This is needed to resolve relative imports
+          ln -sf projects/${{ inputs.project }}/backend ${{ inputs.project }}
+          mypy --disallow-incomplete-defs --disallow-any-unimported --disallow-any-generics --check-untyped-defs --warn-redundant-casts --warn-unused-ignores --warn-unused-configs --warn-return-any --warn-unreachable --txt-report . --html-report . projects/${{ inputs.project }}/backend/
+          cat index.txt
+
+      shell: bash
+    # - run: echo "Nice to meet you!"
+    #   shell: pwsh
