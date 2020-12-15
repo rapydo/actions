@@ -18,7 +18,8 @@ runs:
           pip install mypy lxml html5lib ${{ inputs.install }}
           echo "[mypy]" > mypy.ini
           if [[ ! -z ${{ inputs.ignore }} ]]; then
-            for lib in ${{ inputs.ignore }}; do
+            echo ${INPUT_IGNORE};
+            for lib in ${INPUT_IGNORE}; do
               echo "[mypy-${lib}.*]" >> mypy.ini
               echo "ignore_missing_imports = True" >> mypy.ini
             done
