@@ -20,7 +20,7 @@ runs:
 
           if [[ ! -z "${{ inputs.ignore }}" ]]; then
             echo "Ignoring: [${{ inputs.ignore }}]";
-            for lib in "${{ inputs.ignore }}" do
+            for lib in "${{ inputs.ignore }}"; do
               echo "[mypy-${lib}.*]" >> mypy.ini
               echo "ignore_missing_imports = True" >> mypy.ini
             done
