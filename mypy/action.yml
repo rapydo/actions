@@ -3,7 +3,7 @@ inputs:
     description: "Name of project to be tested"
     required: true
   install:
-    description: "List of extra libraries or stubs to be installed
+    description: "List of extra libraries or stubs to be installed"
     required: false
     default: ""
   ignore:
