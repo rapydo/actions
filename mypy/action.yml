@@ -17,8 +17,12 @@ runs:
     - run: |
           pip install mypy lxml html5lib ${{ inputs.install }}
           echo "[mypy]" > mypy.ini
-          if [[ ! -z ${{ inputs.ignore }} ]]; then
-            echo ${INPUT_IGNORE};
+          
+          # When you specify an input to an action in a workflow file or use a default input value,
+          # GitHub creates an environment variable for the input with the name INPUT_<VARIABLE_NAME>
+          # https://docs.github.com/en/free-pro-team@latest/actions/creating-actions/metadata-syntax-for-github-actions#inputs
+          echo ${INPUT_IGNORE};
+          if [[ ! -z ${INPUT_IGNORE}; ]]; then
             for lib in ${INPUT_IGNORE}; do
               echo "[mypy-${lib}.*]" >> mypy.ini
               echo "ignore_missing_imports = True" >> mypy.ini
