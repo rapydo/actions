@@ -1,6 +1,10 @@
 inputs:
   project:
     description: "Name of the RAPyDo Project to be configured"
+  submodule:
+    description: "RAPyDo submodule do be installed"
+    required: false
+    default: "do"
   codecov_token:
     description: "Codecov Token"
     required: false
@@ -9,12 +13,12 @@ runs:
   steps:
     - run: |
           python -m pip install --upgrade pip
-          export RAPYDO_VERSION=$(grep "  rapydo:" projects/${{ inputs.project}}/project_configuration.yaml | sed 's/  rapydo: //' | tr -d '"')
+          export RAPYDO_VERSION=$(grep "  rapydo:" projects/${{ inputs.project }}/project_configuration.yaml | sed 's/  rapydo: //' | tr -d '"')
           # Make the environment variable available to next steps
           echo "RAPYDO_VERSION=${RAPYDO_VERSION}" >> $GITHUB_ENV
           echo "CODECOV_TOKEN=${{ inputs.codecov_token }}" >> $GITHUB_ENV
-          pip install --upgrade --no-cache-dir git+https://github.com/rapydo/do.git@${RAPYDO_VERSION}
-          rapydo --testing --project ${{ inputs.project}} init
+          pip install --upgrade --no-cache-dir git+https://github.com/rapydo/${{ inputs.submodule }}.git@${RAPYDO_VERSION}
+          rapydo --testing --project ${{ inputs.project }} init
           rapydo version
       shell: bash
     # - run: echo "Nice to meet you!"
