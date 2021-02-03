@@ -51,6 +51,10 @@ runs:
           echo "COMMIT_INFO_TIMESTAMP=${COMMIT_INFO_TIMESTAMP}" >> $GITHUB_ENV
           echo "COMMIT_INFO_REMOTE=${COMMIT_INFO_REMOTE}" >> $GITHUB_ENV
           echo "CYPRESS_GROUP=${CYPRESS_GROUP}" >> $GITHUB_ENV
+
+          echo "AUTH_TESTING_TOTP_HASH=${AUTH_TESTING_TOTP_HASH}" >> $GITHUB_ENV
+          echo "CYPRESS_TESTING_TOTP_HASH=${CYPRESS_TESTING_TOTP_HASH}" >> $GITHUB_ENV
+          
           echo "Cypress environment is ready"
 
       shell: bash
