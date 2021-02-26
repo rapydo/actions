@@ -30,8 +30,8 @@ runs:
           # This is needed to resolve relative imports
           ln -sf projects/${{ inputs.project }}/backend ${{ inputs.project }}
           # --disallow-any-unimported 
-          mypy --disallow-incomplete-defs --disallow-any-generics --check-untyped-defs --warn-redundant-casts --warn-unused-ignores --warn-unused-configs --warn-return-any --warn-unreachable --txt-report . --html-report . projects/${{ inputs.project }}/backend/
-          cat index.txt
+          mypy --disallow-incomplete-defs --disallow-any-generics --check-untyped-defs --warn-redundant-casts --warn-unused-ignores --warn-unused-configs --warn-return-any --warn-unreachable --txt-report report --html-report report projects/${{ inputs.project }}/backend/
+          cat report/index.txt
 
       shell: bash
     # - run: echo "Nice to meet you!"
