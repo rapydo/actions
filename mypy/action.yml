@@ -35,7 +35,7 @@ runs:
           ln -sf projects/${{ inputs.project }}/backend ${{ inputs.project }}
           # --disallow-any-unimported 
           
-          if [[ "${{ inputs.allow_untyped_defs }}" == "true"]]; then
+          if [[ "${{ inputs.allow_untyped_defs }}" == "true" ]]; then
             DISALLOW_UNTYPED_DEFS=""
           else
             DISALLOW_UNTYPED_DEFS="--disallow-untyped-defs"
