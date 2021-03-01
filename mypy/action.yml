@@ -36,9 +36,9 @@ runs:
           # --disallow-any-unimported 
           
           if [[ "${{ inputs.allow_untyped_defs }}" == "true"]]; then
-            DISALLOW_UNTYPED_DEFS="";
+            DISALLOW_UNTYPED_DEFS=""
           else
-            DISALLOW_UNTYPED_DEFS="--disallow-untyped-defs";
+            DISALLOW_UNTYPED_DEFS="--disallow-untyped-defs"
           fi
 
           mypy ${DISALLOW_UNTYPED_DEFS} \
