@@ -52,7 +52,7 @@ runs:
             --warn-unreachable \
             --txt-report report \
             --html-report report \
-            --exclude /projects/${{ inputs.project }}/backend/migrations/ \
+            --exclude backend/migrations/ \
             projects/${{ inputs.project }}/backend/
 
           cat report/index.txt
