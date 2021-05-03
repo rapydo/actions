@@ -32,7 +32,7 @@ runs:
           fi
           
           # ignore alembic migrations
-          echo "[mypy-projects.*.backend.migrations]" >> mypy.ini
+          echo "[mypy-projects.*.backend.migrations.*]" >> mypy.ini
           echo "ignore_errors = True" >> mypy.ini
 
           # This is needed to resolve relative imports
