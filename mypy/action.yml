@@ -30,6 +30,10 @@ runs:
               echo "ignore_missing_imports = True" >> mypy.ini
             done
           fi
+          
+          # ignore alembic migrations
+          echo "[mypy-projects.*.backend.migrations]" >> mypy.ini
+          echo "ignore_errors = True" >> mypy.ini
 
           # This is needed to resolve relative imports
           ln -sf projects/${{ inputs.project }}/backend ${{ inputs.project }}
