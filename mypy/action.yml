@@ -32,6 +32,7 @@ runs:
           fi
           
           # ignore alembic migrations
+          # Please note that a __init__.py is needed in migrations folder, and alembic does not add it by it-self
           echo "[mypy-projects.*.backend.migrations.*]" >> mypy.ini
           echo "ignore_errors = True" >> mypy.ini
 
