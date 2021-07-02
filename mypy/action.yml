@@ -19,7 +19,7 @@ runs:
   using: "composite"
   steps:
     - run: |
-          pip install mypy lxml html5lib types-requests types-Flask types-python-dateutil types-pytz pymongo-stubs pika-stubs celery-types ${{ inputs.install }}
+          pip install mypy lxml html5lib types-requests types-Flask types-python-dateutil types-pytz pymongo-stubs pika-stubs celery-types mongo-types ${{ inputs.install }}
           echo "[mypy]" > mypy.ini
 
           if [[ ! -z "${{ inputs.ignore }}" ]]; then
