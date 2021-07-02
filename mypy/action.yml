@@ -22,20 +22,20 @@ runs:
           pip install ${{ inputs.install }} mypy lxml html5lib types-requests types-Flask types-python-dateutil types-pytz pika-stubs celery-types mongo-types sqlalchemy-stubs
           echo "[mypy]" > mypy.ini
 
+          echo "[mypy-neomodel.*]" >> mypy.ini
+          echo "ignore_missing_imports = True" >> mypy.ini
+
+          echo "[mypy-pymodm.*]" >> mypy.ini
+          echo "ignore_missing_imports = True" >> mypy.ini
+
+          echo "[mypy-faker.*]" >> mypy.ini
+          echo "ignore_missing_imports = True" >> mypy.ini
+
+          echo "[mypy-plumbum.*]" >> mypy.ini
+          echo "ignore_missing_imports = True" >> mypy.ini
+
           if [[ ! -z "${{ inputs.ignore }}" ]]; then
             
-            echo "[mypy-neomodel.*]" >> mypy.ini
-            echo "ignore_missing_imports = True" >> mypy.ini
-
-            echo "[mypy-pymodm.*]" >> mypy.ini
-            echo "ignore_missing_imports = True" >> mypy.ini
-
-            echo "[mypy-faker.*]" >> mypy.ini
-            echo "ignore_missing_imports = True" >> mypy.ini
-
-            echo "[mypy-plumbum.*]" >> mypy.ini
-            echo "ignore_missing_imports = True" >> mypy.ini
-
             for lib in $(echo "${{ inputs.ignore }}"); do
               echo "Ignoring: [${lib}]";
               echo "[mypy-${lib}.*]" >> mypy.ini
