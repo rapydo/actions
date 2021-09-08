@@ -23,5 +23,3 @@ runs:
             rapydo version
           fi
       shell: bash
-    # - run: echo "Nice to meet you!"
-    #   shell: pwsh
