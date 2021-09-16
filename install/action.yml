@@ -18,6 +18,13 @@ runs:
           echo "RAPYDO_VERSION=${RAPYDO_VERSION}" >> $GITHUB_ENV
           echo "CODECOV_TOKEN=${{ inputs.codecov_token }}" >> $GITHUB_ENV
           pip install --upgrade --no-cache-dir git+https://github.com/rapydo/${{ inputs.submodule }}.git@${RAPYDO_VERSION}
+          
+          # This will fail starting from rapydo 10.0 ... but with rapydo 10 this if will be totally obsolete
+          if [[ "${RAPYDO_VERSION}" > "2.0" ]]; then
+            rapydo install buildx
+            rapydo install compose
+          fi
+          
           if [[ "${{ inputs.submodule }}" == "do" ]]; then
             rapydo --testing --project ${{ inputs.project }} init
             rapydo version
