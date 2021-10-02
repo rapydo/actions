@@ -1,5 +1,8 @@
 inputs:
   path:
+    description: "Path to the repository"
+    required: false
+  cov_file:
     description: "Path to the coverage file"
     required: false
   project:
@@ -20,15 +23,18 @@ runs:
 
           pwd
           ls
+          ls ..
+          ls ../..
+          ls ../../..
 
           echo "CODECOV_TOKEN=${{ inputs.codecov_token }}" >> $GITHUB_ENV
           
           if [[ ! -z "${{ inputs.project }}" ]]; then
             if [[ "${{ inputs.step }}" == "backend" ]]; then
-              docker cp ${{ inputs.codecov_token }}_backend_1:/code/coverage.xml ${HOME}/coverage.xml
+              docker cp ${{ inputs.codecov_token }}_backend_1:/code/coverage.xml ${{ inputs.path }}/coverage.xml
             # Both karma e cypress share the same path
             elif [[ "${{ inputs.step }}" == "frontend" ]]; then
-              cp data/${{ inputs.step }}/karma/lcov.info ${HOME}/
+              cp data/${{ inputs.step }}/karma/lcov.info ${{ inputs.path }}/
             else
               echo "Unkwnon step: ${{ inputs.step }}"
               exit 1
@@ -37,10 +43,10 @@ runs:
             echo "Both project and path options are missing, can't retrieve a coverage file"
             exit 1
           else
-            cp ${{ inputs.path }} ${HOME}/
+            cp ${{ inputs.cov_file }} ${{ inputs.path }}/
           fi
           
-          cd ${HOME}
+          cd ${{ inputs.path }}
 
           # curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
           # downloaded once and included on that action
