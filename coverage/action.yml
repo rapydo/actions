@@ -1,7 +1,7 @@
 inputs:
   path:
     description: "Path to the repository"
-    required: false
+    required: true
   cov_file:
     description: "Path to the coverage file"
     required: false
@@ -22,10 +22,8 @@ runs:
           set -e
 
           pwd
-          ls
           ls ..
-          ls ../..
-          ls ../../..
+          ls ../_actions
 
           echo "CODECOV_TOKEN=${{ inputs.codecov_token }}" >> $GITHUB_ENV
           
