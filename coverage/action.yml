@@ -22,8 +22,11 @@ runs:
           set -e
 
           pwd
-          ls ../..
-          ls ../../_actions
+          ls ../../_actions/actions
+          echo "..."
+          ls ../../_actions/actions/coverage
+          echo "..."
+          ls ../../_actions/actions/coverage/pgp_keys.asc
 
           echo "CODECOV_TOKEN=${{ inputs.codecov_token }}" >> $GITHUB_ENV
           
