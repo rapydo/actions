@@ -22,8 +22,8 @@ runs:
           set -e
 
           pwd
-          ls ..
-          ls ../_actions
+          ls ../..
+          ls ../../_actions
 
           echo "CODECOV_TOKEN=${{ inputs.codecov_token }}" >> $GITHUB_ENV
           
