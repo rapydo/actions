@@ -1,0 +1,55 @@
+inputs:
+  path:
+    description: "Path to the coverage file"
+    required: false
+  project:
+    description: "Name of the RAPyDo Project"
+    required: false
+  step:
+    description: "Name step name (backend, frontend)"
+    required: false
+  codecov_token:
+    description: "Codecov Token"
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - run: |
+
+          echo "CODECOV_TOKEN=${{ inputs.codecov_token }}" >> $GITHUB_ENV
+          
+          if [[ ! -z "${{ inputs.project }}" ]]; then
+            if [[ "${{ inputs.step }}" == "backend" ]]; then
+              docker cp ${{ inputs.codecov_token }}_backend_1:/code/coverage.xml /tmp/coverage.xml
+            # Both karma e cypress share the same path
+            elif [[ "${{ inputs.step }}" == "frontend" ]]; then
+              cp data/${{ inputs.step }}/karma/lcov.info /tmp/
+            else
+              echo "Unkwnon step: ${{ inputs.step }}"
+              exit 1
+            fi
+          elif [[ -z "${{ inputs.path }}" ]]; then
+            echo "Both project and path options are missing, can't retrieve a coverage file"
+            exit 1
+          else
+            cp ${{ inputs.path }} /tmp
+          fi
+          
+          cd /tmp
+
+          curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
+
+          curl -Os https://uploader.codecov.io/latest/linux/codecov
+
+          curl -Os https://uploader.codecov.io/latest/linux/codecov.SHA256SUM
+
+          curl -Os https://uploader.codecov.io/latest/linux/codecov.SHA256SUM.sig
+
+          gpgv codecov.SHA256SUM.sig codecov.SHA256SUM
+
+          shasum -a 256 -c codecov.SHA256SUM
+
+          chmod +x codecov
+          ./codecov
+
+      shell: bash
