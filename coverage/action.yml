@@ -29,10 +29,10 @@ runs:
           
           if [[ ! -z "${{ inputs.project }}" ]]; then
             if [[ "${{ inputs.step }}" == "backend" ]]; then
-              docker cp ${{ inputs.codecov_token }}_backend_1:/code/coverage.xml ${{ inputs.path }}/coverage.xml
+              docker cp ${{ inputs.project }}_backend_1:/code/coverage.xml ${{ inputs.path }}/coverage.xml
             # Both karma e cypress share the same path
             elif [[ "${{ inputs.step }}" == "frontend" ]]; then
-              cp data/${{ inputs.step }}/karma/lcov.info ${{ inputs.path }}/
+              cp data/${{ inputs.project }}/karma/lcov.info ${{ inputs.path }}/
             else
               echo "Unkwnon step: ${{ inputs.step }}"
               exit 1
