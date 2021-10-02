@@ -21,13 +21,6 @@ runs:
     
           set -e
 
-          pwd
-          ls ../../_actions/actions
-          echo "..."
-          ls ../../_actions/actions/coverage
-          echo "..."
-          ls ../../_actions/actions/coverage/pgp_keys.asc
-
           echo "CODECOV_TOKEN=${{ inputs.codecov_token }}" >> $GITHUB_ENV
           
           if [[ ! -z "${{ inputs.project }}" ]]; then
@@ -51,7 +44,7 @@ runs:
 
           # curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
           # downloaded once and included on that action
-          gpg --no-default-keyring --keyring trustedkeys.gpg --import pgp_keys.asc
+          # curl https://raw.githubusercontent.com/rapydo/actions/main/coverage/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
 
           curl -Os https://uploader.codecov.io/latest/linux/codecov
 
