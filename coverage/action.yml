@@ -18,6 +18,9 @@ runs:
     
           set -e
 
+          pwd
+          ls
+
           echo "CODECOV_TOKEN=${{ inputs.codecov_token }}" >> $GITHUB_ENV
           
           if [[ ! -z "${{ inputs.project }}" ]]; then
@@ -39,7 +42,9 @@ runs:
           
           cd ${HOME}
 
-          curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
+          # curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
+          # downloaded once and included on that action
+          gpg --no-default-keyring --keyring trustedkeys.gpg --import pgp_keys.asc
 
           curl -Os https://uploader.codecov.io/latest/linux/codecov
 
