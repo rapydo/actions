@@ -44,7 +44,7 @@ runs:
 
           # curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
           # downloaded once and included on that action
-          # curl https://raw.githubusercontent.com/rapydo/actions/main/coverage/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
+          curl https://raw.githubusercontent.com/rapydo/actions/main/coverage/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
 
           curl -Os https://uploader.codecov.io/latest/linux/codecov
 
