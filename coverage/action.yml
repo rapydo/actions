@@ -52,7 +52,7 @@ runs:
           
           if [[ -f "codecov.yml" ]]; then
             # merge codecov.yml & codecov.rapydo.yml
-            echo "Merge of codecov config yaml is not supported yet
+            echo "Merge of codecov config yaml is not supported yet"
             exit 1
           else
             mv codecov.rapydo.yml codecov.yml
