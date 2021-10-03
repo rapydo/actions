@@ -5,9 +5,6 @@ inputs:
     description: "RAPyDo submodule do be installed"
     required: false
     default: "do"
-  codecov_token:
-    description: "Codecov Token"
-    required: false
 runs:
   using: "composite"
   steps:
@@ -16,7 +13,6 @@ runs:
           export RAPYDO_VERSION=$(grep "  rapydo:" projects/${{ inputs.project }}/project_configuration.yaml | sed 's/  rapydo: //' | tr -d '"')
           # Make the environment variable available to next steps
           echo "RAPYDO_VERSION=${RAPYDO_VERSION}" >> $GITHUB_ENV
-          echo "CODECOV_TOKEN=${{ inputs.codecov_token }}" >> $GITHUB_ENV
           pip install --upgrade --no-cache-dir git+https://github.com/rapydo/${{ inputs.submodule }}.git@${RAPYDO_VERSION}
                   
           if [[ "${{ inputs.submodule }}" == "do" ]]; then
