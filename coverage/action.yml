@@ -39,8 +39,14 @@ runs:
           else
             cp ${{ inputs.cov_file }} ${{ inputs.repository }}/
           fi
-          
+
+          echo "******************************"
           cd ${{ inputs.repository }}
+          
+          pwd
+          echo "******************************"
+          ls
+          echo "******************************"
 
           # curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
           # downloaded once and included on that action
