@@ -1,5 +1,5 @@
 inputs:
-  path:
+  repository:
     description: "Path to the repository"
     required: true
   cov_file:
@@ -25,22 +25,22 @@ runs:
           
           if [[ ! -z "${{ inputs.project }}" ]]; then
             if [[ "${{ inputs.step }}" == "backend" ]]; then
-              docker cp ${{ inputs.project }}_backend_1:/code/coverage.xml ${{ inputs.path }}/coverage.xml
+              docker cp ${{ inputs.project }}_backend_1:/code/coverage.xml ${{ inputs.repository }}/coverage.xml
             # Both karma e cypress share the same path
             elif [[ "${{ inputs.step }}" == "frontend" ]]; then
-              cp data/${{ inputs.project }}/karma/lcov.info ${{ inputs.path }}/
+              cp data/${{ inputs.project }}/karma/lcov.info ${{ inputs.repository }}/
             else
               echo "Unkwnon step: ${{ inputs.step }}"
               exit 1
             fi
-          elif [[ -z "${{ inputs.path }}" ]]; then
+          elif [[ -z "${{ inputs.cov_file }}" ]]; then
             echo "Both project and path options are missing, can't retrieve a coverage file"
             exit 1
           else
-            cp ${{ inputs.cov_file }} ${{ inputs.path }}/
+            cp ${{ inputs.cov_file }} ${{ inputs.repository }}/
           fi
           
-          cd ${{ inputs.path }}
+          cd ${{ inputs.repository }}
 
           # curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
           # downloaded once and included on that action
