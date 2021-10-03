@@ -63,6 +63,6 @@ runs:
           shasum -a 256 -c codecov.SHA256SUM
 
           chmod +x codecov
-          ./codecov -s ${{ inputs.repository }}
+          ./codecov
 
       shell: bash
