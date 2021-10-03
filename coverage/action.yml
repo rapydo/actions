@@ -51,9 +51,14 @@ runs:
           curl -o codecov.rapydo.yml https://raw.githubusercontent.com/rapydo/actions/main/coverage/codecov.yml 
           
           if [[ -f "codecov.yml" ]]; then
-            # merge codecov.yml & codecov.rapydo.yml
-            echo "Merge of codecov config yaml is not supported yet"
-            exit 1
+            echo "******************************"
+            curl -L -o yq https://github.com/mikefarah/yq/releases/download/v4.13.3/yq_linux_amd64 && chmod +x yq
+            
+            ./yq eval-all --inplace 'select(fileIndex == 0) * select(fileIndex == 1)' codecov.yml codecov.rapydo.yml
+
+            cat codecov.yml 
+            echo "******************************"
+            
           else
             mv codecov.rapydo.yml codecov.yml
           fi
