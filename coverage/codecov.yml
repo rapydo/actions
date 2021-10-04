@@ -4,3 +4,4 @@ ignore:
   - "projects/**/backend/tasks/test_task.py"  # created by tests
   - "submodules/**/*"
   - "data/**/*"
+  - "data/**/frontend/app/validate.js"
