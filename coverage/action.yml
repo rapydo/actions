@@ -53,8 +53,8 @@ runs:
           if [[ -f "codecov.yml" ]]; then
             echo "******************************"
             curl -L -o yq https://github.com/mikefarah/yq/releases/download/v4.13.3/yq_linux_amd64 && chmod +x yq
-            
-            ./yq eval-all --inplace 'select(fileIndex == 0) * select(fileIndex == 1)' codecov.yml codecov.rapydo.yml
+            mv codecov.yml codecov.custom.yml
+            ./yq eval-all 'select(fileIndex == 0) *+ select(fileIndex == 1)' codecov.custom.yml codecov.rapydo.yml >  codecov.yml
 
             cat codecov.yml 
             echo "******************************"
