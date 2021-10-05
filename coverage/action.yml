@@ -47,21 +47,7 @@ runs:
           echo "******************************"
           ls
           echo "******************************"
-
-          curl -o codecov.rapydo.yml https://raw.githubusercontent.com/rapydo/actions/main/coverage/codecov.yml 
           
-          if [[ -f "codecov.yml" ]]; then
-            echo "******************************"
-            curl -L -o yq https://github.com/mikefarah/yq/releases/download/v4.13.3/yq_linux_amd64 && chmod +x yq
-            mv codecov.yml codecov.custom.yml
-            ./yq eval-all 'select(fileIndex == 0) *+ select(fileIndex == 1)' codecov.custom.yml codecov.rapydo.yml >  codecov.yml
-          else
-            mv codecov.rapydo.yml codecov.yml
-          fi
-
-          cat codecov.yml 
-          echo "******************************"
-            
           # curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
           # downloaded once and included on that action
           curl https://raw.githubusercontent.com/rapydo/actions/main/coverage/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
