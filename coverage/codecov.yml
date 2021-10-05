@@ -1,7 +1,0 @@
-# https://docs.codecov.com/docs/ignoring-paths
-ignore:
-  - "tasks/test_task.py"
-  - "projects/**/backend/tasks/test_task.py"
-  - "submodules/**/*"
-  - "data/**/*"
-  - "data/**/frontend/app/validate.js"
