@@ -43,8 +43,9 @@ runs:
             done
           fi
 
-          # This is needed to resolve relative imports
+          # These are needed to resolve relative imports
           ln -sf projects/${{ inputs.project }}/backend ${{ inputs.project }}
+          ln -sf projects/${{ inputs.project }}/backend/tests tests
           
           if [[ "${{ inputs.allow_untyped_defs }}" == "true" ]]; then
             DISALLOW_UNTYPED_DEFS=""
