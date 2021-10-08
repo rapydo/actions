@@ -52,7 +52,7 @@ runs:
           if [[ "${{ inputs.allow_untyped_defs }}" == "true" ]]; then
             DISALLOW_UNTYPED_DEFS=""
           else
-            DISALLOW_UNTYPED_DEFS="--disallow-untyped-defs"
+            DISALLOW_UNTYPED_DEFS="--disallow-untyped-defs --disallow-untyped-calls"
           fi
 
           mypy ${DISALLOW_UNTYPED_DEFS} \
