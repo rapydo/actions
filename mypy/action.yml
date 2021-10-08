@@ -45,7 +45,6 @@ runs:
 
           # This is needed to resolve relative imports
           ln -sf projects/${{ inputs.project }}/backend ${{ inputs.project }}
-          # --disallow-any-unimported 
           
           if [[ "${{ inputs.allow_untyped_defs }}" == "true" ]]; then
             DISALLOW_UNTYPED_DEFS=""
@@ -56,6 +55,7 @@ runs:
           mypy ${DISALLOW_UNTYPED_DEFS} \
             --disallow-incomplete-defs \
             --disallow-any-generics \
+            --disallow-any-unimported \
             --check-untyped-defs \
             --warn-redundant-casts \
             --warn-unused-ignores \
