@@ -31,9 +31,6 @@ runs:
           echo "[mypy-pymodm.*]" >> mypy.ini
           echo "ignore_missing_imports = True" >> mypy.ini
 
-          echo "[mypy-faker.*]" >> mypy.ini
-          echo "ignore_missing_imports = True" >> mypy.ini
-
           echo "[mypy-plumbum.*]" >> mypy.ini
           echo "ignore_missing_imports = True" >> mypy.ini
 
