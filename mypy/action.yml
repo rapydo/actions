@@ -45,7 +45,8 @@ runs:
 
           # These are needed to resolve relative imports
           ln -sf projects/${{ inputs.project }}/backend ${{ inputs.project }}
-          ln -sf projects/${{ inputs.project }}/backend/tests tests
+          mkdir -p tests
+          ln -sf projects/${{ inputs.project }}/backend/tests tests/custom
           
           if [[ "${{ inputs.allow_untyped_defs }}" == "true" ]]; then
             DISALLOW_UNTYPED_DEFS=""
