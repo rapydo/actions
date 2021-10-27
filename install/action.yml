@@ -8,16 +8,23 @@ inputs:
 runs:
   using: "composite"
   steps:
+   - uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip
+        key: ${{ inputs.submodule }}-${RAPYDO_VERSION}-$(date +%d%m%Y)
     - run: |
           python -m pip install --upgrade pip wheel
           export RAPYDO_VERSION=$(grep "  rapydo:" projects/${{ inputs.project }}/project_configuration.yaml | sed 's/  rapydo: //' | tr -d '"')
           # Make the environment variable available to next steps
           echo "RAPYDO_VERSION=${RAPYDO_VERSION}" >> $GITHUB_ENV
-          pip install --upgrade --no-cache-dir git+https://github.com/rapydo/${{ inputs.submodule }}.git@${RAPYDO_VERSION}
+          # Without cache
+          # pip install --upgrade --no-cache-dir git+https://github.com/rapydo/${{ inputs.submodule }}.git@${RAPYDO_VERSION}
+          # With cache
+          pip install --upgrade --upgrade-strategy eager git+https://github.com/rapydo/${{ inputs.submodule }}.git@${RAPYDO_VERSION}
                   
           if [[ "${{ inputs.submodule }}" == "do" ]]; then
 
-            # This will fail starting from rapydo 10.0 ... but with rapydo 10 this if will be totally obsolete
+            # This will fail starting from rapydo 10.0 ... but with rapydo 10 this will be totally obsolete!
             if [[ "${RAPYDO_VERSION}" > "2.0" ]]; then
               rapydo install buildx
               rapydo install compose
