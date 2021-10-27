@@ -8,10 +8,10 @@ inputs:
 runs:
   using: "composite"
   steps:
-   - uses: actions/cache@v2
-      with:
-        path: ${{ env.pythonLocation }}
-        key: ${{ env.pythonLocation }}-${{ inputs.submodule }}-${RAPYDO_VERSION}-$(date +%d%m%Y)
+    # - uses: actions/cache@v2
+    #   with:
+    #     path: ${{ env.pythonLocation }}
+    #     key: ${{ env.pythonLocation }}-${{ inputs.submodule }}-${RAPYDO_VERSION}-$(date +%d%m%Y)
     - run: |
           python -m pip install --upgrade pip wheel
           export RAPYDO_VERSION=$(grep "  rapydo:" projects/${{ inputs.project }}/project_configuration.yaml | sed 's/  rapydo: //' | tr -d '"')
