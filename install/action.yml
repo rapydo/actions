@@ -5,6 +5,10 @@ inputs:
     description: "RAPyDo submodule do be installed"
     required: false
     default: "do"
+  swarm:
+    description: "Enable Swarm Mode"
+    required: false
+    default: false
 runs:
   using: "composite"
   steps:
@@ -13,6 +17,12 @@ runs:
     #     path: ${{ env.pythonLocation }}
     #     key: ${{ env.pythonLocation }}-${{ inputs.submodule }}-${RAPYDO_VERSION}-$(date +%d%m%Y)
     - run: |
+
+          if [[ ${{ inputs.swarm }} ]]; then
+            export SWARM_MODE=1
+            echo "SWARM_MODE=1" >> $GITHUB_ENV
+          fi
+
           python -m pip install --upgrade pip wheel
           export RAPYDO_VERSION=$(grep "  rapydo:" projects/${{ inputs.project }}/project_configuration.yaml | sed 's/  rapydo: //' | tr -d '"')
           # Make the environment variable available to next steps
@@ -31,6 +41,11 @@ runs:
             fi
 
             rapydo --testing --project ${{ inputs.project }} init
+            
+            if [[ ${{ inputs.swarm }} ]]; then
+              rapydo run --pull registry
+            fi
+
             rapydo version
 
           fi
