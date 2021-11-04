@@ -18,7 +18,7 @@ runs:
     #     key: ${{ env.pythonLocation }}-${{ inputs.submodule }}-${RAPYDO_VERSION}-$(date +%d%m%Y)
     - run: |
 
-          if [[ ${{ inputs.swarm }} ]]; then
+          if [[ "${{ inputs.swarm }}" == "1" ]]; then
             export SWARM_MODE=1
             echo "SWARM_MODE=1" >> $GITHUB_ENV
           fi
@@ -42,7 +42,7 @@ runs:
 
             rapydo --testing --project ${{ inputs.project }} init
             
-            if [[ ${{ inputs.swarm }} ]]; then
+            if [[ "${{ inputs.swarm }}" == "1" ]]; then
               rapydo run --pull registry
             fi
 
