@@ -25,10 +25,12 @@ runs:
           
           if [[ ! -z "${{ inputs.project }}" ]]; then
             if [[ "${{ inputs.step }}" == "backend" ]]; then
-              cname=$(docker ps --format '{{.Names}}' | grep _backend)
+              cname=$(docker ps --format '{{.Names}}' | grep "backend")
+              echo "Copying coverage.xml from ${cname}"
               docker cp $cname:/tmp/coverage.xml ${{ inputs.repository }}/coverage.xml
             # Both karma e cypress share the same path
             elif [[ "${{ inputs.step }}" == "frontend" ]]; then
+              echo "Copying lcov.info from data/${{ inputs.project }}/karma"
               cp data/${{ inputs.project }}/karma/lcov.info ${{ inputs.repository }}/
             else
               echo "Unkwnon step: ${{ inputs.step }}"
@@ -40,6 +42,8 @@ runs:
           else
             cp ${{ inputs.cov_file }} ${{ inputs.repository }}/
           fi
+
+          echo "Coverage file retrieved"
 
           echo "******************************"
           cd ${{ inputs.repository }}
