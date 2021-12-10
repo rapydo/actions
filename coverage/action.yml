@@ -21,7 +21,7 @@ runs:
     
           set -e
 
-          echo "CODECOV_TOKEN=${{ inputs.codecov_token }}" >> $GITHUB_ENV
+          # echo "CODECOV_TOKEN=${{ inputs.codecov_token }}" >> $GITHUB_ENV
           
           if [[ ! -z "${{ inputs.project }}" ]]; then
             if [[ "${{ inputs.step }}" == "backend" ]]; then
@@ -68,6 +68,13 @@ runs:
           shasum -a 256 -c codecov.SHA256SUM
 
           chmod +x codecov
-          ./codecov -f '!submodules/**/*'
+          
+          if [[ ! -z "${{ inputs.project }}" ]]; then
+              upload_token="-t ${{ inputs.codecov_token }}";
+          else
+              upload_token=""
+          fi
+
+          ./codecov -f '!submodules/**/*' ${upload_token}
 
       shell: bash
