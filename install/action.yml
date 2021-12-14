@@ -45,6 +45,7 @@ runs:
               sudo systemctl restart docker.service
 
               rapydo run --pull registry
+              sleep 3
             fi
 
             rapydo version
