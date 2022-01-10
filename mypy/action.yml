@@ -19,7 +19,7 @@ runs:
   using: "composite"
   steps:
     - run: |
-          pip install ${{ inputs.install }} mypy lxml html5lib types-requests types-python-dateutil types-pytz pika-stubs celery-types mongo-types sqlalchemy-stubs
+          pip install ${{ inputs.install }} mypy lxml html5lib types-requests==2.27.2 types-python-dateutil types-pytz pika-stubs celery-types mongo-types sqlalchemy-stubs
           echo "[mypy]" > mypy.ini
 
           echo "[mypy-neomodel.*]" >> mypy.ini
