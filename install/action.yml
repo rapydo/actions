@@ -19,7 +19,7 @@ runs:
             echo "SWARM_MODE=1" >> $GITHUB_ENV
           fi
 
-          python -m pip install --upgrade pip wheel packaging
+          python -m pip install --upgrade pip wheel
           export RAPYDO_VERSION=$(grep "  rapydo:" projects/${{ inputs.project }}/project_configuration.yaml | sed 's/  rapydo: //' | tr -d '"')
           # Make the environment variable available to next steps
           echo "RAPYDO_VERSION=${RAPYDO_VERSION}" >> $GITHUB_ENV
