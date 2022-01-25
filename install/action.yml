@@ -23,7 +23,7 @@ runs:
           export RAPYDO_VERSION=$(grep "  rapydo:" projects/${{ inputs.project }}/project_configuration.yaml | sed 's/  rapydo: //' | tr -d '"')
           # Make the environment variable available to next steps
           echo "RAPYDO_VERSION=${RAPYDO_VERSION}" >> $GITHUB_ENV
-          sudo pip install --upgrade --no-cache-dir git+https://github.com/rapydo/${{ inputs.submodule }}.git@${RAPYDO_VERSION}
+          pip install --upgrade --no-cache-dir git+https://github.com/rapydo/${{ inputs.submodule }}.git@${RAPYDO_VERSION}
                   
           if [[ "${{ inputs.submodule }}" == "do" ]]; then
 
