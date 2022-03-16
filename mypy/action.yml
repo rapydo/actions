@@ -19,16 +19,13 @@ runs:
   using: "composite"
   steps:
     - run: |
-          pip install ${{ inputs.install }} mypy lxml html5lib types-requests types-urllib3 types-python-dateutil types-pytz pika-stubs celery-types mongo-types sqlalchemy-stubs
+          pip install ${{ inputs.install }} mypy lxml html5lib types-requests types-urllib3 types-python-dateutil types-pytz pika-stubs celery-types sqlalchemy-stubs
           echo "[mypy]" > mypy.ini
 
           echo "[mypy-neomodel.*]" >> mypy.ini
           echo "ignore_missing_imports = True" >> mypy.ini
 
           echo "[mypy-neo4j.*]" >> mypy.ini
-          echo "ignore_missing_imports = True" >> mypy.ini
-
-          echo "[mypy-pymodm.*]" >> mypy.ini
           echo "ignore_missing_imports = True" >> mypy.ini
 
           echo "[mypy-plumbum.*]" >> mypy.ini
