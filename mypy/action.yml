@@ -19,6 +19,7 @@ runs:
   using: "composite"
   steps:
     - run: |
+          apt-get install --yes --no-install-recommends libgeos-dev
           pip install ${{ inputs.install }} mypy lxml html5lib types-requests types-urllib3 types-python-dateutil types-pytz pika-stubs celery-types sqlalchemy-stubs
           echo "[mypy]" > mypy.ini
 
