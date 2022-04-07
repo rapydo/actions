@@ -28,9 +28,6 @@ runs:
           echo "[mypy-neo4j.*]" >> mypy.ini
           echo "ignore_missing_imports = True" >> mypy.ini
 
-          echo "[mypy-plumbum.*]" >> mypy.ini
-          echo "ignore_missing_imports = True" >> mypy.ini
-
           if [[ ! -z "${{ inputs.ignore }}" ]]; then
             
             for lib in $(echo "${{ inputs.ignore }}"); do
