@@ -27,11 +27,8 @@ runs:
                   
           if [[ "${{ inputs.submodule }}" == "do" ]]; then
 
-            # This will fail starting from rapydo 10.0 ... but with rapydo 10 this will be totally obsolete!
-            if [[ "${RAPYDO_VERSION}" > "2.0" ]]; then
-              rapydo install buildx
-              rapydo install compose
-            fi
+            rapydo install buildx
+            rapydo install compose
 
             rapydo --testing --project ${{ inputs.project }} init
             
