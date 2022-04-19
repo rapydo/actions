@@ -34,7 +34,7 @@ runs:
             rapydo install buildx
             rapydo install compose
 
-            rapydo --testing --project ${{ inputs.project }} ${{inputs.extra_options}} init
+            rapydo --testing --project ${{ inputs.project }} ${{inputs.extra_options }} init
             
             if [[ "${{ inputs.swarm }}" == "1" ]]; then
 
