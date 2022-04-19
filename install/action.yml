@@ -9,6 +9,10 @@ inputs:
     description: "Enable Swarm Mode"
     required: false
     default: 0
+  extra_options:
+    description: "Extra RAPyDo options"
+    required: false
+    default: ""
 runs:
   using: "composite"
   steps:
@@ -30,7 +34,7 @@ runs:
             rapydo install buildx
             rapydo install compose
 
-            rapydo --testing --project ${{ inputs.project }} init
+            rapydo --testing --project ${{ inputs.project }} ${{inputs.extra_options}} init
             
             if [[ "${{ inputs.swarm }}" == "1" ]]; then
 
