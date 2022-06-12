@@ -20,7 +20,7 @@ runs:
   steps:
     - run: |
           sudo apt-get install --yes libgeos-dev
-          pip install ${{ inputs.install }} mypy lxml html5lib types-requests types-urllib3 types-python-dateutil types-pytz types-PyYAML pika-stubs celery-types==0.12.0 sqlalchemy-stubs
+          pip install ${{ inputs.install }} mypy lxml html5lib types-requests types-urllib3 types-python-dateutil types-pytz types-PyYAML pika-stubs celery-types sqlalchemy-stubs
           echo "[mypy]" > mypy.ini
 
           echo "[mypy-neomodel.*]" >> mypy.ini
