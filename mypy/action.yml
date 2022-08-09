@@ -30,7 +30,7 @@ runs:
             DISALLOW_UNTYPED_DEFS="1"
           fi
 
-          docker run --rm -it \
+          docker run --rm -i \
             -e PROJECT_NAME=${{ inputs.project }} \
             -e DISALLOW_UNTYPED_DEFS="${DISALLOW_UNTYPED_DEFS}" \
             -e IGNORE_LIBS="${{ inputs.ignore }}" \
