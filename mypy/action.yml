@@ -2,6 +2,10 @@ inputs:
   project:
     description: "Name of project to be tested"
     required: true
+  rapydo_version:
+    description: "RAPyDo version"
+    required: false
+    default: "2.4"
   install:
     description: "List of extra libraries or stubs to be installed"
     required: false
@@ -19,54 +23,22 @@ runs:
   using: "composite"
   steps:
     - run: |
-          sudo apt-get install --yes libgeos-dev
-          pip install ${{ inputs.install }} mypy lxml html5lib types-requests types-urllib3 types-python-dateutil types-pytz types-PyYAML pika-stubs celery-types sqlalchemy-stubs
-          echo "[mypy]" > mypy.ini
-
-          echo "[mypy-neomodel.*]" >> mypy.ini
-          echo "ignore_missing_imports = True" >> mypy.ini
-
-          echo "[mypy-neo4j.*]" >> mypy.ini
-          echo "ignore_missing_imports = True" >> mypy.ini
-
-          if [[ ! -z "${{ inputs.ignore }}" ]]; then
-            
-            for lib in $(echo "${{ inputs.ignore }}"); do
-              echo "Ignoring: [${lib}]";
-              echo "[mypy-${lib}.*]" >> mypy.ini
-              echo "ignore_missing_imports = True" >> mypy.ini
-            done
-          fi
-
-          # These are needed to resolve relative imports
-          ln -sf projects/${{ inputs.project }}/backend ${{ inputs.project }}
-          mkdir -p tests
-          touch tests/__init__.py
-          ln -sf ../projects/${{ inputs.project }}/backend/tests tests/custom
-          
+    
           if [[ "${{ inputs.allow_untyped_defs }}" == "true" ]]; then
-            DISALLOW_UNTYPED_DEFS=""
+            DISALLOW_UNTYPED_DEFS="0"
           else
-            DISALLOW_UNTYPED_DEFS="--disallow-untyped-defs --disallow-untyped-calls"
+            DISALLOW_UNTYPED_DEFS="1"
           fi
 
-          mypy ${DISALLOW_UNTYPED_DEFS} \
-            --disallow-incomplete-defs \
-            --disallow-any-generics \
-            --disallow-any-unimported \
-            --check-untyped-defs \
-            --warn-redundant-casts \
-            --warn-unused-ignores \
-            --warn-unused-configs \
-            --warn-return-any \
-            --warn-unreachable \
-            --txt-report report \
-            --html-report report \
-            --exclude backend/migrations/ \
-            projects/${{ inputs.project }}/backend/
-
-          cat report/index.txt
+          docker run --rm -it \
+            -e PROJECT_NAME=${{ inputs.project }} \
+            -e DISALLOW_UNTYPED_DEFS="${DISALLOW_UNTYPED_DEFS}" \
+            -e IGNORE_LIBS="${{ inputs.ignore }}" \
+            -e ADD_LIBS="${{ inputs.install }}" \
+            -v $(pwd)/projects/${{ inputs.project }}/backend:/code/${{ inputs.project }} \
+            -v $(pwd)/submodules/http-api/tests:/code/tests \
+            -v $(pwd)/projects/${{ inputs.project }}/backend/tests:/code/tests/custom \
+            rapydo/mypy:${{ inputs.rapydo_version }} bash
 
       shell: bash
-    # - run: echo "Nice to meet you!"
-    #   shell: pwsh
+
