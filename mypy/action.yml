@@ -2,10 +2,6 @@ inputs:
   project:
     description: "Name of project to be tested"
     required: true
-  rapydo_version:
-    description: "RAPyDo version"
-    required: false
-    default: "2.4"
   install:
     description: "List of extra libraries or stubs to be installed"
     required: false
@@ -24,6 +20,8 @@ runs:
   steps:
     - run: |
     
+          RAPYDO_VERSION=$(grep "  rapydo:" projects/${{ inputs.project }}/project_configuration.yaml | sed 's/  rapydo: //' | tr -d '"')
+
           if [[ "${{ inputs.allow_untyped_defs }}" == "true" ]]; then
             DISALLOW_UNTYPED_DEFS="0"
           else
@@ -38,7 +36,7 @@ runs:
             -v $(pwd)/projects/${{ inputs.project }}/backend:/code/${{ inputs.project }} \
             -v $(pwd)/submodules/http-api/tests:/code/tests \
             -v $(pwd)/projects/${{ inputs.project }}/backend/tests:/code/tests/custom \
-            rapydo/mypy:${{ inputs.rapydo_version }} bash
+            rapydo/mypy:${RAPYDO_VERSION} bash
 
       shell: bash
 
