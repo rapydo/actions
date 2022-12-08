@@ -38,5 +38,6 @@ runs:
             -v $(pwd)/projects/${{ inputs.project }}/backend/tests:/code/tests/custom \
             rapydo/mypy:${RAPYDO_VERSION} bash
 
+          echo "MyPy executed"
       shell: bash
 
